@@ -1,0 +1,23 @@
+[project]
+name = "tests"
+version = "0.1.0"
+description = "Python tests exploration"
+authors = [
+    {name = "diego", email = "diegoariel83@gmail.com"},
+]
+dependencies = []
+requires-python = "==3.12.*"
+readme = "README.md"
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.dev-dependencies]
+test = [
+    "pytest>=8.3.2",
+    "pytest-mock>=3.14.0",
+]
+
+[tool.pdm.scripts]
+tests = "pdm run pytest"
