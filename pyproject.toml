@@ -18,6 +18,10 @@ test = [
     "pytest>=8.3.2",
     "pytest-mock>=3.14.0",
 ]
+dev = [
+    "mypy>=1.11.2",
+]
 
 [tool.pdm.scripts]
 tests = "pdm run pytest"
+lint = "pdm run mypy ."
