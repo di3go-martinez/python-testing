@@ -1,18 +1,27 @@
-name: Tests (pdm)
+name: Tests (pdm+uv)
 
 on: [push]
 
 jobs:
-  tests-pdm:
+  tests-pdm-uv:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: uv.lock
 
       - name: Set up PDM
         uses: pdm-project/setup-pdm@v4.1
         with:
           python-version-file: .python-version
           cache: true
+      - run: pdm config use_uv true
+      - run: pdm config python.install_root $(uv python dir)
 
       - name: Install dependencies
         run: pdm sync --dev --group test --group dev --group lint
