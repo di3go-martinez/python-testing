@@ -1,6 +1,8 @@
 name: Tests (pdm+uv)
 
-on: [push]
+on:
+  workflow_dispatch:
+
 
 jobs:
   tests-pdm-uv:
