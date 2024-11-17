@@ -15,7 +15,7 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: pdm sync --dev --group test --group dev
+        run: pdm sync --dev --group test --group dev --group lint
 
       - run: pdm lint
       - run: pdm tests

@@ -16,9 +16,12 @@ dev = [
     "pytest>=8.3.3",
     "pytest-mock>=3.14.0",
 ]
+lint = [
+    "ruff>=0.7.4",
+]
 [tool.pdm]
 distribution = false
 
 [tool.pdm.scripts]
 tests = "pdm run pytest"
-lint = "pdm run mypy ."
+lint = "pdm run ruff check ."
