@@ -3,7 +3,7 @@ name: Tests
 on: [push]
 
 jobs:
-  tests:
+  tests-pdm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,11 +11,11 @@ jobs:
       - name: Set up PDM
         uses: pdm-project/setup-pdm@v4.1
         with:
-          python-version: 3.12
+          python-version-file: .python-version
           cache: true
 
       - name: Install dependencies
-        run: pdm sync --dev --group test --group dev
+        run: pdm sync --dev --group test --group dev --group lint
 
       - run: pdm lint
       - run: pdm tests
