@@ -1,1 +1,1 @@
-dagger call test --src .
+dagger call test-testcontainers-way --src .

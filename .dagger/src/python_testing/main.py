@@ -47,7 +47,8 @@ class PythonTesting:
         )
 
     @function
-    async def test(self, src: dagger.Directory) -> str:
+    async def test_dagger_way(self, src: dagger.Directory) -> str:
+        """Runs tests with preconfigured services (like db). Turn off test containers inside the target configuration"""
         return await (
             (await self.build_env(src))
             .with_service_binding("pg", self.spin_pg())
@@ -56,6 +57,17 @@ class PythonTesting:
             .with_env_variable("DB_PASSWORD", "test")
             .with_env_variable("DB_NAME", "postgres")
             .with_env_variable("USE_TESTCONTAINERS", "False")
+            .with_exec(["/root/.local/bin/uv", "run", "pytest"])
+            .stdout()
+        )
+
+    @function
+    async def test_testcontainers_way(self, src: dagger.Directory) -> str:
+        """Runs tests with testcontainers compatibility """
+        built_container : dagger.Container = await self.build_env(src)
+        return await (
+            dag.testcontainers().setup(built_container)
+            #.with_env_variable("USE_TESTCONTAINERS", "True")
             .with_exec(["/root/.local/bin/uv", "run", "pytest"])
             .stdout()
         )
