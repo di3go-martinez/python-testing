@@ -1,0 +1,13 @@
+{
+  "name": "python-testing",
+  "engineVersion": "v0.14.0",
+  "sdk": "python",
+  "dependencies": [
+    {
+      "name": "testcontainers",
+      "source": "github.com/vito/daggerverse/testcontainers@7fca39d2beca4ffa5a169d35cc5aad3c6704f4ec",
+      "pin": "7fca39d2beca4ffa5a169d35cc5aad3c6704f4ec"
+    }
+  ],
+  "source": ".dagger"
+}
