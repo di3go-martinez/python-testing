@@ -22,6 +22,22 @@ lint = [
 [tool.pdm]
 distribution = false
 
+#[tool.pdm.dev-dependencies]
+#test = [
+#    "pytest>=8.3.2",
+#    "pytest-mock>=3.14.0",
+#]
+
+# does uv support this?
 [tool.pdm.scripts]
-tests = "pdm run pytest"
-lint = "pdm run ruff check ."
+tests = "pdm run pytest" # uv sync --all-extra ; uv run pytest
+lint = "pdm run ruff check ." # uv run mypy .
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.2",
+    "pytest-mock>=3.14.0",
+]
+lint = [
+    "ruff>=0.7.4",
+]
