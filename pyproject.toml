@@ -9,24 +9,8 @@ dependencies = []
 requires-python = "==3.12.*"
 readme = "README.md"
 
-
-[project.optional-dependencies]
-dev = [
-    "typing-extensions>=4.12.2",
-    "pytest>=8.3.3",
-    "pytest-mock>=3.14.0",
-]
-lint = [
-    "ruff>=0.7.4",
-]
 [tool.pdm]
 distribution = false
-
-#[tool.pdm.dev-dependencies]
-#test = [
-#    "pytest>=8.3.2",
-#    "pytest-mock>=3.14.0",
-#]
 
 # does uv support this?
 [tool.pdm.scripts]
