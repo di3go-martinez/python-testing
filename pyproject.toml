@@ -5,7 +5,9 @@ description = "Python tests exploration"
 authors = [
     {name = "diego", email = "diegoariel83@gmail.com"},
 ]
-dependencies = []
+dependencies = [
+    "psycopg>=3.2.3",
+]
 requires-python = "==3.12.*"
 readme = "README.md"
 
@@ -21,6 +23,8 @@ lint = "pdm run ruff check ." # uv run mypy .
 dev = [
     "pytest>=8.3.2",
     "pytest-mock>=3.14.0",
+    "testcontainers>=4.8.2",
+    "typing-extensions>=4.12.2",
 ]
 lint = [
     "ruff>=0.7.4",
