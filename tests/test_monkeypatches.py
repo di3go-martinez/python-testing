@@ -33,12 +33,12 @@ def test_my_class_attr_patched(monkeypatch):
     monkeypatch.setattr(c, "_the_secret", 9)
     assert c.encrypt("diego ariel") == "e"
 
-    #doesnt work.
-    #monkeypatch.setattr(MyClass, "_the_secret",
+    # doesnt work.
+    # monkeypatch.setattr(MyClass, "_the_secret",
     #                    property(lambda self: 10))
-    #assert c.encrypt("diego ariel") == "l"
+    # assert c.encrypt("diego ariel") == "l"
 
-    #simply set the value we want
+    # simply set the value we want
     c._the_secret = 10
     assert c.encrypt("diego ariel") == "l"
 
