@@ -19,22 +19,23 @@ jobs:
       - name: lint
         uses: dagger/dagger-for-github@v7.0.1
         with:
+          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           version: "latest"
           verb: call
           workdir: .
           args: lint --src=.
 
-
       - name: Test
         uses: dagger/dagger-for-github@v7.0.1
         with:
+          # assumes the Dagger Cloud token is in
+          # a repository secret named DAGGER_CLOUD_TOKEN
+          # set via the GitHub UI/CLI
+          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           version: "latest"
           verb: call
           workdir: .
           #module: github.com/kpenfound/dagger-modules/golang@v0.2.0
-          args: test --src=.
-          # assumes the Dagger Cloud token is in
-          # a repository secret named DAGGER_CLOUD_TOKEN
-          # set via the GitHub UI/CLI
-          #cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+          args: test-testcontainers-way --src=.
+          #enable if running in a self-hosted runner
           #engine-stop: false
