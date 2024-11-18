@@ -1,6 +1,10 @@
 import dagger
 from dagger import dag, function, object_type
 
+def _(cmd: str)-> list[str]:
+    # TODO doesnt support valid whitespace indicators (inside params for instance)
+    return cmd.split()
+
 
 @object_type
 class PythonTesting:
@@ -9,29 +13,16 @@ class PythonTesting:
         return (
             dag.container()
             .from_("ubuntu")
-            .with_exec(["apt", "update"])
-            .with_exec(["apt", "install", "--assume-yes", "curl"])
-            .with_exec(
-                ["curl", "-LsSf", "https://astral.sh/uv/install.sh", "-o", "install.sh"]
-            )
-            .with_exec(["bash", "install.sh"])
-            .with_exec(["/root/.local/bin/uv", "--version"])
+            .with_exec(_("apt update"))
+            .with_exec(_("apt install --assume-yes curl"))
+            .with_exec(_("curl -LsSf https://astral.sh/uv/install.sh -o install.sh"))
+            .with_exec(_("bash install.sh"))
+            .with_exec(_("/root/.local/bin/uv --version"))
             .with_mounted_cache("/root/.cache/uv", dag.cache_volume("uv.lock"))
             # TODO copy only pyproject.toml y uv.lock for honoring cache
             .with_directory("/workdir", src)
             .with_workdir("/workdir")
-            .with_exec(
-                [
-                    "/root/.local/bin/uv",
-                    "sync",
-                    "--frozen",
-                    "--all-extras",
-                    "--dev",
-                    "--group",
-                    "lint",
-                    "--group",
-                    "test"
-                ]
+            .with_exec(_("/root/.local/bin/uv sync --frozen --all-extras --dev --group lint --group test")
             )
         )
 
