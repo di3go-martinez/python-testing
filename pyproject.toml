@@ -10,15 +10,15 @@ requires-python = "==3.12.*"
 readme = "README.md"
 
 
-[project.optional-dependencies]
-dev = [
-    "typing-extensions>=4.12.2",
-    "pytest>=8.3.3",
-    "pytest-mock>=3.14.0",
-]
-lint = [
-    "ruff>=0.7.4",
-]
+#[project.optional-dependencies]
+#dev = [
+#    "typing-extensions>=4.12.2",
+#    "pytest>=8.3.3",
+#    "pytest-mock>=3.14.0",
+#]
+#lint = [
+#    "ruff>=0.7.4",
+#]
 [tool.pdm]
 distribution = false
 
@@ -37,7 +37,23 @@ lint = "pdm run ruff check ." # uv run mypy .
 dev = [
     "pytest>=8.3.2",
     "pytest-mock>=3.14.0",
+    "typing-extensions>=4.12.2",
 ]
 lint = [
+    "pydantic>=2.9.2",
+    "pyright>=1.1.389",
     "ruff>=0.7.4",
 ]
+
+[tool.pyright]
+include = ["src", "tests"]
+exclude = ["**/node_modules",
+    "**/__pycache__",
+]
+defineConstant = { DEBUG = true }
+
+reportMissingImports = "error"
+reportMissingTypeStubs = false
+
+pythonVersion = "3.12"
+pythonPlatform = "Linux"
