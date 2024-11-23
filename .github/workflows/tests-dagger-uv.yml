@@ -1,0 +1,40 @@
+name: Tests (uv+dagger)
+on:
+  workflow_dispatch:
+
+#env:
+  #_EXPERIMENTAL_DAGGER_CACHE_CONFIG: "mode=max,image-manifest=true,oci-mediatypes=true,type=registry"
+  #_EXPERIMENTAL_DAGGER_RUNNER_HOST: "tcp://localhost:8090"
+
+jobs:
+  tests-dagger:
+    name: test
+    # for caching
+    #runs-on: [ 'self-hosted', 'Linux', 'X64' ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: lint
+        uses: dagger/dagger-for-github@v7.0.1
+        with:
+          version: "latest"
+          verb: call
+          workdir: .
+          args: lint --src=.
+
+
+      - name: Test
+        uses: dagger/dagger-for-github@v7.0.1
+        with:
+          version: "latest"
+          verb: call
+          workdir: .
+          #module: github.com/kpenfound/dagger-modules/golang@v0.2.0
+          args: test --src=.
+          # assumes the Dagger Cloud token is in
+          # a repository secret named DAGGER_CLOUD_TOKEN
+          # set via the GitHub UI/CLI
+          #cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+          #engine-stop: false
