@@ -21,15 +21,31 @@ lint = "pdm run ruff check ." # uv run mypy .
 
 [dependency-groups]
 dev = [
-    "pytest>=8.3.2",
+    "coverage>=7.6.7",
+    "pytest-cov>=6.0.0",
     "pytest-mock>=3.14.0",
+    "pytest>=8.3.2",
     "testcontainers>=4.8.2",
     "typing-extensions>=4.12.2",
 ]
 lint = [
+    "pydantic>=2.9.2",
+    "pyright>=1.1.389",
     "ruff>=0.7.4",
 ]
-test = [
-    "coverage>=7.6.7",
-    "pytest-cov>=6.0.0",
+#TODO??
+#test = [
+#]
+
+[tool.pyright]
+include = ["src", "tests"]
+exclude = ["**/node_modules",
+    "**/__pycache__",
 ]
+defineConstant = { DEBUG = true }
+
+reportMissingImports = "error"
+reportMissingTypeStubs = false
+
+pythonVersion = "3.12"
+pythonPlatform = "Linux"
