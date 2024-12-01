@@ -1,5 +1,8 @@
+from typing import Annotated
+
 import dagger
-from dagger import dag, function, object_type
+from dagger import dag, function, object_type, DefaultPath
+
 
 def _(cmd: str)-> list[str]:
     # TODO doesnt support valid whitespace indicators (inside params for instance)
@@ -9,7 +12,7 @@ def _(cmd: str)-> list[str]:
 @object_type
 class PythonTesting:
     @function
-    async def build_env(self, src: dagger.Directory):
+    async def build_env(self, src: Annotated[dagger.Directory, DefaultPath(".")]):
         return (
             dag.container()
             .from_("ubuntu")
@@ -38,8 +41,9 @@ class PythonTesting:
         )
 
     @function
-    async def test_dagger_way(self, src: dagger.Directory) -> str:
+    async def test_dagger_way(self, src: Annotated[dagger.Directory, DefaultPath(".")] ) -> str:
         """Runs tests with preconfigured services (like db). Turn off test containers inside the target configuration"""
+
         return await (
             (await self.build_env(src))
             .with_service_binding("pg", self.spin_pg())
@@ -53,7 +57,7 @@ class PythonTesting:
         )
 
     @function
-    async def test_testcontainers_way(self, src: dagger.Directory) -> str:
+    async def test_testcontainers_way(self, src: Annotated[dagger.Directory, DefaultPath(".")]) -> str:
         """Runs tests with testcontainers compatibility """
         built_container : dagger.Container = await self.build_env(src)
         return await (
@@ -64,7 +68,7 @@ class PythonTesting:
         )
 
     @function
-    async def lint(self, src: dagger.Directory) -> str:
+    async def lint(self, src: Annotated[dagger.Directory, DefaultPath(".")]) -> str:
         return await (
             (await self.build_env(src))
             .with_exec(["/root/.local/bin/uv", "run", "ruff", "check", "."])
