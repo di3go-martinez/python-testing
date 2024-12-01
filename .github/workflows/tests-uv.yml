@@ -28,7 +28,7 @@ jobs:
         run: uv sync --frozen --all-extras --dev --group test --group lint
 
       - run: uv run ruff check .
-      - run: uv run pytest --cov
+      - run: uv run pytest --cov tests
 
       # not needed according to the docs
       #- if: steps.setup-uv.outputs.cache-hit != 'true'

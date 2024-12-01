@@ -1,15 +1,16 @@
 [project]
 name = "tests"
-version = "0.1.0"
+version = "0.0.0"
 description = "Python tests exploration"
 authors = [
     {name = "diego", email = "diegoariel83@gmail.com"},
 ]
+requires-python = "==3.13.*"
+readme = "README.md"
 dependencies = [
+    "psycopg-binary>=3.2.3", #TODO make it optional, and add it when dagger runs
     "psycopg>=3.2.3",
 ]
-requires-python = "==3.12.*"
-readme = "README.md"
 
 [tool.pdm]
 distribution = false
@@ -25,11 +26,12 @@ dev = [
     "pytest-mock>=3.14.0",
     "testcontainers>=4.8.2",
     "typing-extensions>=4.12.2",
+    "coverage>=7.6.7",
+    "pytest-cov>=6.0.0",
 ]
 lint = [
     "ruff>=0.7.4",
 ]
-test = [
-    "coverage>=7.6.7",
-    "pytest-cov>=6.0.0",
-]
+#TODO??
+#test = [
+#]
